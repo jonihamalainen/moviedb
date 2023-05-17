@@ -1,8 +1,6 @@
 import {genreCheck} from '@/utils/genreCheck';
 import { genret } from '@/utils/genreLista';
-import Image from 'next/image';
 import Link from 'next/link'
-import Logo from '../public/logo.png'
 import './global.css'
 
 interface Props{
