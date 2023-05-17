@@ -20,7 +20,7 @@ export default function RootLayout({children}: Props) {
 
         <label htmlFor="my-drawer-2" className="btn btn-primary bg-red-600 hover:bg-red-800 drawer-button mt-2 lg:hidden">Kategoriat</label>
 
-<div className='flex flex-row mt-2 drawer drawer-mobile'>
+<div className='flex flex-row mt-2 drawer-mobile'>
 
 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
