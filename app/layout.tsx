@@ -1,8 +1,6 @@
 import {genreCheck} from '@/utils/genreCheck';
 import { genret } from '@/utils/genreLista';
-import Image from 'next/image';
 import Link from 'next/link'
-import Logo from '../public/logo.png'
 import './global.css'
 
 interface Props{
@@ -18,43 +16,47 @@ export default function RootLayout({children}: Props) {
 
         <h1 className='text-3xl'>MyMovieDataBase</h1>
 
-        <div className='flex flex-row mt-2'>
-        
-          <div>
+        <label htmlFor="my-drawer-2" className="btn btn-primary bg-red-600 hover:bg-red-800 drawer-button mt-2 lg:hidden">Kategoriat</label>
 
-            <h2 className="text-3xl pb-2">Kategoriat:</h2>
+<div className='flex flex-row mt-2 drawer-mobile'>
 
-            <ul className='list-none'>
-              {genret.map((genre : string, idx : number) => {
+<input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
 
-                const nimi :  string = genreCheck(genre);
+  <div className="drawer-side w-80 max-lg:absolute max-lg:z-10">
 
-                return(
+  <label htmlFor="my-drawer-2" className="drawer-overlay"></label> 
 
-                  <Link href={`/${genre}`}>
-                    <li className='rounded-full bg-red-600 p-1 hover:bg-red-800 text-white mt-1 text-center'>
-                        {nimi}
-                    </li>
-                   </Link>
+    <ul className="menu w-full bg-white text-base-content">
+      {genret.map((genre : string, idx : number) => {
 
-                )
+        const nimi :  string = genreCheck(genre);
 
-              })}
-            </ul>
-            
-          </div>
+        return(
 
-          <div className='pl-8'>
+          <Link href={`/${genre}`}>
+            <li className='rounded-full bg-red-600 p-1 hover:bg-red-800 text-white mt-1 text-center'>
+                {nimi}
+            </li>
+           </Link>
 
-            {children}
-            
-          </div>
+        )
 
-        </div>
+      })}
+    </ul>
+    
+  </div>
 
-        <p>&copy; Joni H</p>
-        
-      </body>
-    </html>
-  )
+  <div className='lg:pl-8 pl-2 drawer-content'>
+
+    {children}
+    
+  </div>
+
+</div>
+
+<p>&copy; Joni H</p>
+
+</body>
+</html>
+)
 }
