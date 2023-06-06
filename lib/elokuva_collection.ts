@@ -85,11 +85,7 @@ export const haeGenre = async (genrehaku: string): Promise<any> => {
       .db("Elokuvat")
       .collection("elokuva_collection");
 
-    return elokuvalista
-      .find({ genre: genrehaku })
-      .limit(40)
-      .sort({ _id: -1 })
-      .toArray();
+    return elokuvalista.find({ genre: genrehaku }).sort({ _id: -1 }).toArray();
   } catch (e: any) {
     let virhe: string;
 
