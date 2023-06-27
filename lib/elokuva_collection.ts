@@ -106,3 +106,39 @@ export const haeGenre = async (genrehaku: string): Promise<any> => {
     throw new Error(virhe);
   }
 };
+
+export const haeKatselulista = async (katselulistaArray:string[] | undefined): Promise<any> => {
+  try {
+    await client.connect();
+
+    const objectIdArray: ObjectId[] | undefined = katselulistaArray?.map(str => new ObjectId(str));
+
+    const query = { _id: { $in: objectIdArray } };
+
+    const elokuvalista: Collection<Elokuva> = client
+      .db("Elokuvat")
+      .collection("elokuva_collection");
+
+      return elokuvalista.find(query).sort({_id:-1}).toArray();
+
+    
+  } catch (e: any) {
+    let virhe: string;
+
+    switch (e.message) {
+      case "fetch failed":
+        virhe = "Palvelimelle ei saatu yhteyttä";
+        break;
+
+      case "bad auth : authentication failed":
+        virhe = "Virheellinen tietokantayhteys";
+        break;
+
+      default:
+        virhe = "Virheellinen data";
+        break;
+    }
+
+    throw new Error(virhe);
+  }
+};

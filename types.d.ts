@@ -67,3 +67,8 @@ export interface SpokenLanguage {
   iso_639_1: string;
   name: string;
 }
+
+export interface UserSessionDetails {
+  email: string | undefined;
+  id: string | undefined;
+}
