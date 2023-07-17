@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { Cast } from "@/types";
 import Link from "next/link";
+import Katselulistabtn from "./Katselulistabtn";
 
 interface Props {
   elokuva: Elokuva;
@@ -10,6 +11,7 @@ interface Props {
   elokuvaKuvaus: string;
   listapituus: number;
   kesto: string;
+  movie_id: string;
 }
 
 function Elokuvatiedot({
@@ -18,6 +20,7 @@ function Elokuvatiedot({
   listapituus,
   kesto,
   nayttelijaLista,
+  movie_id
 }: Props): React.ReactElement {
   return (
     <>
@@ -59,7 +62,7 @@ function Elokuvatiedot({
               <input type="checkbox" id="my-modal" className="modal-toggle" />
 
               <div className="modal">
-                <div className="modal-box bg-white text-left">
+                <div className="modal-box bg-white dark:bg-slate-800 text-left">
                   <p className="py-4">{elokuvaKuvaus}</p>
                   <div className="modal-action">
                     <label
@@ -113,6 +116,8 @@ function Elokuvatiedot({
           </Link>
         </div>
       </div>
+
+      <Katselulistabtn movie_id={movie_id}/>
 
       <div className="grid grid-flow-row mt-2">
         <a href={elokuva.imdburl} target="_blank">
