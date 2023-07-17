@@ -7,7 +7,7 @@ import Katselulistabtn from "./Katselulistabtn";
 
 interface Props {
   elokuva: Elokuva;
-  nayttelijaLista: Cast[];
+  nayttelijaLista: Cast[] | string[];
   elokuvaKuvaus: string;
   listapituus: number;
   kesto: string;
@@ -20,8 +20,9 @@ function Elokuvatiedot({
   listapituus,
   kesto,
   nayttelijaLista,
-  movie_id
+  movie_id,
 }: Props): React.ReactElement {
+  console.log(nayttelijaLista);
   return (
     <>
       <div className="flex flex-row max-sm:flex-col">
@@ -95,13 +96,17 @@ function Elokuvatiedot({
             <p className="text-base mt-2">Elokuvan näyttelijöitä:</p>
 
             <p className="text-base mb-2">
-              {nayttelijaLista.map((nayttelija: any, idx: number) => {
-                if (listapituus !== idx + 1) {
-                  return `${nayttelija.name}, `;
-                } else {
-                  return `${nayttelija.name}`;
-                }
-              })}
+              {nayttelijaLista[0] === "Ei näyttelijöitä" ? (
+                <p>{nayttelijaLista[0].toString()}</p>
+              ) : (
+                nayttelijaLista.map((nayttelija: any, idx: number) => {
+                  if (listapituus !== idx + 1) {
+                    return `${nayttelija.name}, `;
+                  } else {
+                    return `${nayttelija.name}`;
+                  }
+                })
+              )}
             </p>
 
             <p className="text-base my-2">
@@ -117,7 +122,7 @@ function Elokuvatiedot({
         </div>
       </div>
 
-      <Katselulistabtn movie_id={movie_id}/>
+      <Katselulistabtn movie_id={movie_id} />
 
       <div className="grid grid-flow-row mt-2">
         <a href={elokuva.imdburl} target="_blank">

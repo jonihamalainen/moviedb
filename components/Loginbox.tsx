@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { lisaaVierailu } from "@/lib/supabase_collection";
 
 function Loginbox(): React.ReactElement {
   const lomakeref: React.MutableRefObject<any> = useRef<HTMLFormElement>();
@@ -16,6 +17,7 @@ function Loginbox(): React.ReactElement {
       password: lomakeref.current.salasana.value,
     });
     if (!error) {
+      await lisaaVierailu(supabase)
       setLoading(true);
       router.push("/");
     } else {

@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default function GeneralLayout({ children }: Props) {
+
   return (
     <Providers>
       <div className="grid grid-cols-2">

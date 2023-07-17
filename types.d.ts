@@ -72,3 +72,37 @@ export interface UserSessionDetails {
   email: string | undefined;
   id: string | undefined;
 }
+
+export interface ElokuvaNostoTiedot {
+  _id: ObjectId;
+  nimi: string;
+}
+
+export interface NostoLista {
+  id: number;
+  nimi: string;
+  elokuvat: JSON;
+  julkaistu: boolean;
+}
+
+export interface TopLista {
+  id: number;
+  movie_id: string;
+  genre: JSON;
+  klikkaukset: number;
+  nimi: string;
+}
+
+export interface ElokuvaLisays {
+  alkuperainennimi: string;
+  genre: Array<string>;
+  imdbid: string;
+  imdburl: string;
+  kestomin: number;
+  nimi: string;
+  ohjaaja: Array<string>;
+  tmdbid: number;
+  tmdbkuva: string;
+  tuotantomaa: Array<string>;
+  valmistumisvuosi: number;
+}
