@@ -1,17 +1,23 @@
+'use client'
+
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import { Elokuva } from "@/lib/elokuva_collection";
+import { lisaaElokuvaKatselu } from "@/lib/supabase_collection";
+import { createClientComponentClient, createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface Props {
   elokuva: Elokuva;
 }
 
 function Elokuvalistaus({ elokuva }: Props): React.ReactElement {
+  const supabase = createClientComponentClient();
   const genreSlice: string = elokuva.genre.slice(0, 2).toString();
 
   return (
     <>
+      <button onClick={() => lisaaElokuvaKatselu(supabase,elokuva)}>
       <Link href={`/elokuva/${elokuva._id}`}>
         <div className="grid justify-items-center ml-2">
           <Image
@@ -34,6 +40,7 @@ function Elokuvalistaus({ elokuva }: Props): React.ReactElement {
           </p>
         </div>
       </Link>
+      </button>
     </>
   );
 }

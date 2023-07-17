@@ -34,7 +34,6 @@ export const haeElokuvaTiedotAPI = async (
     const yhteys = await fetch(
       `${url}movie/${id}?api_key=${process.env.API_KEY!}&language=${hakukieli}`
     );
-
     return await yhteys.json();
   } catch (e: any) {
     let virhe: string;

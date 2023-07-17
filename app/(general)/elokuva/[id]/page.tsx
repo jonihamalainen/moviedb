@@ -6,7 +6,7 @@ import { Cast, Credits } from "@/types";
 import Elokuvatiedot from "@/components/Elokuvatiedot";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getSessionUserID } from "@/utils/supabaseUtils";
+import { lisaaSivuLataus } from "@/lib/supabase_collection";
 
 interface Props {
   params: {
@@ -16,6 +16,8 @@ interface Props {
 
 export default async function ElokuvaPage({ params }: Props) {
 
+  const supabase = createServerComponentClient({cookies})
+
   const movie_id: string = params.id;
 
   const elokuva: Elokuva = await haeElokuva(params.id);
@@ -24,11 +26,13 @@ export default async function ElokuvaPage({ params }: Props) {
 
   const elokuvaKuvaus: string = await kuvausTeksti(elokuva.tmdbid.toString());
 
-  const nayttelijaLista: Cast[] = nayttelijaListaus(apiData.cast);
+  const nayttelijaLista: Cast[] | string[] = nayttelijaListaus(apiData.cast);
 
   const listapituus: number = nayttelijaLista.length;
 
   const kesto: string = timeConvert(elokuva.kestomin);
+
+  await lisaaSivuLataus(supabase);
 
   return (
     <>

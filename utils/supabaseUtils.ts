@@ -1,4 +1,4 @@
-import { UserSessionDetails } from "@/types";
+import { TopLista, UserSessionDetails } from "@/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export const getSessionUserID = async (
@@ -21,7 +21,8 @@ export const getSessionUserEmail = async (
   return String(user_email);
 };
 
-export const getSessionUserDetails = async (supabase: SupabaseClient<any, "public", any>
+export const getSessionUserDetails = async (
+  supabase: SupabaseClient<any, "public", any>
 ): Promise<UserSessionDetails> => {
   const { data } = await supabase.auth.getSession();
 
@@ -29,5 +30,22 @@ export const getSessionUserDetails = async (supabase: SupabaseClient<any, "publi
 
   const user_id = data.session?.user.id;
 
-  return {email: user_email, id: user_id};
+  return { email: user_email, id: user_id };
+};
+
+export const haeTopGenret = (genret: JSON[], maara: number): string[] => {
+  
+  const sanat: any[] = genret.flat();
+
+  const esiintymat: { [sana: string]: number } = {};
+
+  for (const sana of sanat) {
+    esiintymat[sana] = (esiintymat[sana] || 0) + 1;
+  }
+
+  const lajitellutSanat: string[] = Object.keys(esiintymat).sort((a, b) => esiintymat[b] - esiintymat[a]);
+
+  const TopGenret:string[] = lajitellutSanat.slice(0, maara);
+
+  return TopGenret;
 };

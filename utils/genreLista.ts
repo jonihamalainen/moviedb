@@ -1,1 +1,3 @@
 export const genret : Array<string> = ["komedia", "lyhytelokuva", "draama", "elamankerta", "historia", "fantasia", "kauhu", "perhe", "romantiikka", "toiminta", "seikkailu", "sota", "western", "scifi", "mysteeri", "jannitys", "musiikki", "musikaali", "rikos", "urheilu", "dokumentti", "animaatio", "filmnoir"];
+
+export const genretFull: Array<string> = ["Komedia", "Lyhytelokuva", "Draama", "Elämänkerta", "Historia", "Fantasia", "Kauhu", "Perhe", "Romantiikka", "Toiminta", "Seikkailu", "Sota", "Western", "Sci-Fi", "Mysteeri", "Jännitys", "Musiikki", "Musikaali", "Rikos", "Urheilu", "Dokumentti", "Animaatio", "Film-Noir"]

@@ -14,11 +14,9 @@ function Katselulistabtn({ movie_id }: Props): React.ReactElement {
   const [lisatty, setLisatty] = useState<boolean>(false);
 
   const fetchData = async () => {
-    const user_id: String = await getSessionUserID(supabase);
     const { data } = await supabase
       .from("katselulista")
-      .select("movie_id")
-      .eq("user_id", user_id);
+      .select("movie_id");
     const dataArray: any = data?.map(
       (item: { movie_id: String }) => item.movie_id
     );

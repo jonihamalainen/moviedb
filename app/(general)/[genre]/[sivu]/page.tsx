@@ -1,9 +1,11 @@
 import Elokuvalistaus from "@/components/Elokuvalistaus";
 import Paginationbtn from "@/components/Paginationbtn";
 import { Elokuva, haeGenre } from "@/lib/elokuva_collection";
+import { lisaaSivuLataus } from "@/lib/supabase_collection";
 import { genreCheck } from "@/utils/genreCheck";
 import { paginationUtils } from "@/utils/paginationUtils";
-import Link from "next/link";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 interface Props {
   params: {
@@ -15,9 +17,16 @@ interface Props {
 export default async function GenrePage({
   params,
 }: Props): Promise<React.ReactElement> {
+
+  const supabase = createServerComponentClient({cookies})
+
+  await lisaaSivuLataus(supabase);
+
   const haku = genreCheck(params.genre);
 
-  const elokuvat: Elokuva[] = await haeGenre(haku);
+  const elokuvat: Elokuva[] = JSON.parse(
+    JSON.stringify(await haeGenre(haku))
+  );
 
   // 0 = totalPages 1 = Slice start 2 = Slice end
   const paginationHelpers: number[] = paginationUtils(elokuvat, params.sivu);

@@ -1,5 +1,6 @@
 import Elokuvalistaus from "@/components/Elokuvalistaus";
 import { Elokuva, haeKatselulista } from "@/lib/elokuva_collection";
+import { lisaaSivuLataus } from "@/lib/supabase_collection";
 import { UserSessionDetails } from "@/types";
 import { getSessionUserDetails } from "@/utils/supabaseUtils";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -11,17 +12,21 @@ export default async function KatselulistaPage(): Promise<React.ReactElement> {
 
   const supabase = createServerComponentClient({ cookies });
 
+  await lisaaSivuLataus(supabase);
+
   const userDetails: UserSessionDetails = await getSessionUserDetails(supabase);
 
   const { data } = await supabase
     .from("katselulista")
     .select("movie_id")
-    .eq("user_id", userDetails.id);
   const dataArray: string[] | undefined = data?.map(
     (item: { movie_id: string }) => item.movie_id
   );
 
-  const elokuvat: Elokuva[] = await haeKatselulista(dataArray);
+  const elokuvat: Elokuva[] = JSON.parse(
+    JSON.stringify(await haeKatselulista(dataArray))
+  );
+
 
   return (
     <>

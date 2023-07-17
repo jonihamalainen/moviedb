@@ -2,7 +2,6 @@
 import { useRef, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
-import { getSessionUserEmail } from "@/utils/supabaseUtils";
 import { isValidEmail } from "@/utils/isValidEmail";
 
 function Register(): React.ReactElement {
