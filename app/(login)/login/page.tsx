@@ -8,7 +8,7 @@ function LoginPage(): React.ReactElement {
   return (
     <div className="flex items-center justify-center min-h-screen flex-col">
       <div>
-        <Image src={Logo} alt="Logo" width={225} height={275} />
+        <h1>MovieDB</h1>
       </div>
       <div>
         <Loginbox />
