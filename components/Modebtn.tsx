@@ -6,11 +6,11 @@ import { FaSun, FaRegMoon, FaRegSun } from "react-icons/fa";
 function Modebtn(): React.ReactElement {
   const { systemTheme, theme, setTheme } = useTheme();
 
-  const currentTheme: any = theme === "system" ? systemTheme : theme;
+  const currentTheme: string | undefined = theme === "system" ? systemTheme : theme;
 
   return (
     <div className="flex flex-row justify-end">
-        {currentTheme === "dark" || localStorage.theme === "dark" ? (
+        {currentTheme === "dark" ? (
           <FaSun
             className="h-6 w-6 cursor-pointer text-yellow-400 "
             onClick={() => {
@@ -28,7 +28,7 @@ function Modebtn(): React.ReactElement {
         <FaRegSun
           className="h-6 w-6 cursor-pointer ml-5"
           onClick={() => {
-            localStorage.removeItem("theme");
+            setTheme("system")
           }}
         />
     </div>
