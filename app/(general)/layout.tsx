@@ -2,9 +2,7 @@ import Modebtn from "@/components/Modebtn";
 import Profiledropdown from "@/components/Profiledropdown";
 import { genreCheck } from "@/utils/genreCheck";
 import { genret } from "@/utils/genreLista";
-import Image from "next/image";
 import Link from "next/link";
-import Logo from "public/logo.png";
 import "../global.css";
 import Providers from "../Providers";
 
@@ -18,7 +16,7 @@ export default function GeneralLayout({ children }: Props) {
     <Providers>
       <div className="grid grid-cols-2">
         <Link href="/">
-          <Image src={Logo} alt="Logo" width={225} height={275} />
+          <h1>MovieDB</h1>
         </Link>
         <Modebtn />
         <Profiledropdown />
