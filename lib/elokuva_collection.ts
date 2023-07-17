@@ -1,124 +1,112 @@
-import { MongoClient, Collection, ObjectId } from 'mongodb';
+import { MongoClient, Collection, ObjectId } from "mongodb";
 
-const client : MongoClient = new MongoClient(process.env.DB_URI!);
+const client: MongoClient = new MongoClient(process.env.DB_URI!);
 
 export interface Elokuva {
-    _id : ObjectId
-    alkuperainennimi : string
-    genre : Array<string>
-    imdbid : string
-    imdburl : string
-    kestomin : number
-    nimi : string
-    ohjaaja : Array<string>
-    tmdbid : number
-    tmdbkuva : string 
-    tuotantomaa : Array<string>
-    valmistumisvuosi : number
+  _id: ObjectId;
+  alkuperainennimi: string;
+  genre: Array<string>;
+  imdbid: string;
+  imdburl: string;
+  kestomin: number;
+  nimi: string;
+  ohjaaja: Array<string>;
+  tmdbid: number;
+  tmdbkuva: string;
+  tuotantomaa: Array<string>;
+  valmistumisvuosi: number;
 }
 
-export const haeElokuvat = async () : Promise<any> => {
+export const haeElokuvat = async (): Promise<any> => {
+  try {
+    await client.connect();
 
-    try {
+    const elokuvalista: Collection<Elokuva> = client
+      .db("Elokuvat")
+      .collection("elokuva_collection");
 
-        await client.connect();
+    return elokuvalista.find({}).limit(40).sort({ _id: -1 }).toArray();
+  } catch (e: any) {
+    let virhe: string;
 
-        const elokuvalista : Collection<Elokuva> = client.db("Elokuvat").collection("elokuva_collection"); 
-    
-        return elokuvalista.find({})
-                            .limit(40)
-                            .sort({_id : -1})
-                            .toArray();
-    
-    }  catch (e : any) {
+    switch (e.message) {
+      case "fetch failed":
+        virhe = "Palvelimelle ei saatu yhteyttä";
+        break;
 
-        let virhe : string;
+      case "bad auth : authentication failed":
+        virhe = "Virheellinen tietokantayhteys";
+        break;
 
-        switch(e.message) {
-
-            case "fetch failed" : virhe = "Palvelimelle ei saatu yhteyttä"; break;
-
-            case "bad auth : authentication failed" : virhe = "Virheellinen tietokantayhteys"; break;
-
-            default : virhe = "Virheellinen data"; break;
-
-        }
-
-        throw new Error(virhe);
-
-        
-
+      default:
+        virhe = "Virheellinen data";
+        break;
     }
 
-}
+    throw new Error(virhe);
+  }
+};
 
-   
+export const haeElokuva = async (id: string): Promise<any> => {
+  try {
+    await client.connect();
 
-export const haeElokuva = async (id : string) : Promise<any> => {
+    const elokuvalista: Collection<Elokuva> = client
+      .db("Elokuvat")
+      .collection("elokuva_collection");
 
-    try {
+    return elokuvalista.findOne({ _id: new ObjectId(id) });
+  } catch (e: any) {
+    let virhe: string;
 
-        await client.connect();
+    switch (e.message) {
+      case "fetch failed":
+        virhe = "Palvelimelle ei saatu yhteyttä";
+        break;
 
-        const elokuvalista : Collection<Elokuva> = client.db("Elokuvat").collection("elokuva_collection"); 
-    
-        return elokuvalista.findOne({ _id : new ObjectId(id) })
+      case "bad auth : authentication failed":
+        virhe = "Virheellinen tietokantayhteys";
+        break;
 
-    }  catch (e : any) {
-
-        let virhe : string;
-
-        switch(e.message) {
-
-            case "fetch failed" : virhe = "Palvelimelle ei saatu yhteyttä"; break;
-
-            case "bad auth : authentication failed" : virhe = "Virheellinen tietokantayhteys"; break;
-
-            default : virhe = "Virheellinen data"; break;
-
-        }
-
-        throw new Error(virhe);
-
-        
-
+      default:
+        virhe = "Virheellinen data";
+        break;
     }
 
+    throw new Error(virhe);
+  }
+};
 
-}
+export const haeGenre = async (genrehaku: string): Promise<any> => {
+  try {
+    await client.connect();
 
-export const haeGenre = async (genrehaku : string) : Promise<any> => {
+    const elokuvalista: Collection<Elokuva> = client
+      .db("Elokuvat")
+      .collection("elokuva_collection");
 
-    try {
+    return elokuvalista
+      .find({ genre: genrehaku })
+      .limit(40)
+      .sort({ _id: -1 })
+      .toArray();
+  } catch (e: any) {
+    let virhe: string;
 
-        await client.connect();
+    switch (e.message) {
+      case "fetch failed":
+        virhe = "Palvelimelle ei saatu yhteyttä";
+        break;
 
-        const elokuvalista : Collection<Elokuva> = client.db("Elokuvat").collection("elokuva_collection");
-    
-        return elokuvalista.find({ genre :  genrehaku})
-                            .limit(40)
-                            .sort({_id : -1})
-                            .toArray();    
+      case "bad auth : authentication failed":
+        virhe = "Virheellinen tietokantayhteys";
+        break;
 
-    } catch (e : any) {
-
-        let virhe : string;
-
-        switch(e.message) {
-
-            case "fetch failed" : virhe = "Palvelimelle ei saatu yhteyttä"; break;
-
-            case "bad auth : authentication failed" : virhe = "Virheellinen tietokantayhteys"; break;
-
-            default : virhe = "Virheellinen data"; break;
-
-        }
-
-        throw new Error(virhe);
-
-        
-
+      default:
+        virhe = "Virheellinen data";
+        break;
     }
 
-   
-}
+    throw new Error(virhe);
+  }
+};
